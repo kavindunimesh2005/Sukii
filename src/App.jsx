@@ -20,7 +20,9 @@ import Contact from './pages/Contact';
 import LoadingPage from './pages/LoadingPage';
 
 export default function App() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(() => {
+    return window.location.pathname !== '/loading';
+  });
   const { theme, toggleTheme } = useTheme();
   const { soundEnabled, toggleSound } = useAudioFeedback();
 
@@ -30,7 +32,10 @@ export default function App() {
       <ScrollToTop />
 
       {/* Initial Animated Preloader */}
-      {isLoading && <LoadingScreen onFinish={() => setIsLoading(false)} />}
+      {isLoading && window.location.pathname !== '/loading' && (
+        <LoadingScreen onFinish={() => setIsLoading(false)} />
+      )}
+
 
       {/* Luxury Custom Cursor on Desktop */}
       <CustomCursor />

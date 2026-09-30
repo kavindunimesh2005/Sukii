@@ -341,12 +341,7 @@ export default function LoadingScreen({ onFinish, isStandalone = false }) {
           </div>
         </div>
       </footer>
-
-      {/* Cinematic Aperture Shutter Curtain Wipe Exit */}
-      <div className="cinema-curtain-top" />
-      <div className="cinema-curtain-bottom" />
-      <div className="cinema-curtain-left" />
-      <div className="cinema-curtain-right" />
     </div>
   );
 }
+
