@@ -27,7 +27,9 @@ export default function Footer() {
               <li><Link to="/gallery">Visual Gallery</Link></li>
               <li><Link to="/services">Services</Link></li>
               <li><Link to="/contact">Contact</Link></li>
+              <li><Link to="/loading">Loading Experience ✦</Link></li>
             </ul>
+
           </div>
 
           <div className="col-6 col-lg-2 footer-nav-col">

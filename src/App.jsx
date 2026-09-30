@@ -17,6 +17,7 @@ import BookDetails from './pages/BookDetails';
 import Gallery from './pages/Gallery';
 import Services from './pages/Services';
 import Contact from './pages/Contact';
+import LoadingPage from './pages/LoadingPage';
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -57,9 +58,11 @@ export default function App() {
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/services" element={<Services />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/loading" element={<LoadingPage />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </main>
+
 
         {/* Minimalist Editorial Footer */}
         <Footer />

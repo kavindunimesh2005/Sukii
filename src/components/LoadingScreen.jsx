@@ -1,13 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useAudioFeedback } from '../hooks/useAudioFeedback';
 
 const DIAGNOSTIC_MESSAGES = [
   'INITIALIZING ATELIER ARCHIVE...',
-  'CALIBRATING FOIL DEBOSSING MASKS...',
-  'CURATING MONOCHROME PALETTES...',
-  'CALCULATING SPINE CURVATURE & GSM...',
-  'COMPOSING BESPOKE LETTERFORMS...',
-  'FINALIZING MUSEUM-GRADE PRESENTATION...',
-  'ATELIER READY.'
+  'CALIBRATING 24K FOIL DEBOSSING DIE...',
+  'CURATING MONOCHROME ARCHIVAL PALETTES...',
+  'COMPUTING GOLDEN RATIO Φ = 1.618 MARGINS...',
+  'ALIGNING 0.05MM SPINE REGISTRATION...',
+  'SYNTHESIZING BESPOKE LETTERFORMS...',
+  'FINALIZING MUSEUM-GRADE MONOGRAPH...',
+  'ATELIER READY // ENTERING § 𝐔 𝐊 𝐈 𝐈'
 ];
 
 const WORDS_CYCLE = [
@@ -15,15 +17,17 @@ const WORDS_CYCLE = [
   'MATERIALITY',
   'ARCHITECTURE',
   'SILENCE',
+  'PERMANENCE',
   '§ 𝐔 𝐊 𝐈 𝐈'
 ];
 
-export default function LoadingScreen({ onFinish }) {
+export default function LoadingScreen({ onFinish, isStandalone = false }) {
   const [progress, setProgress] = useState(0);
   const [isExiting, setIsExiting] = useState(false);
   const [diagIndex, setDiagIndex] = useState(0);
   const [wordIndex, setWordIndex] = useState(0);
   const canvasRef = useRef(null);
+  const { playFoilChime, playTactileClick } = useAudioFeedback();
 
   // Canvas Constellation Nebula Animation
   useEffect(() => {
@@ -41,15 +45,15 @@ export default function LoadingScreen({ onFinish }) {
     window.addEventListener('resize', handleResize);
 
     const particles = [];
-    const count = Math.min(100, Math.floor((width * height) / 14000));
+    const count = Math.min(120, Math.floor((width * height) / 12000));
 
     for (let i = 0; i < count; i++) {
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
         r: Math.random() * 2 + 0.8,
-        vx: (Math.random() - 0.5) * 0.6,
-        vy: (Math.random() - 0.5) * 0.6,
+        vx: (Math.random() - 0.5) * 0.5,
+        vy: (Math.random() - 0.5) * 0.5,
         alpha: Math.random() * 0.6 + 0.3,
         pulse: Math.random() * 0.05 + 0.02
       });
@@ -61,7 +65,7 @@ export default function LoadingScreen({ onFinish }) {
     const render = () => {
       ctx.clearRect(0, 0, width, height);
 
-      // Rotating celestial dust ring in canvas background
+      // Rotating celestial dust ring
       angle += 0.003;
       const centerX = width / 2;
       const centerY = height / 2;
@@ -72,14 +76,14 @@ export default function LoadingScreen({ onFinish }) {
       ctx.rotate(angle);
       ctx.beginPath();
       ctx.arc(0, 0, ringRadius, 0, Math.PI * 2);
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.06)';
+      ctx.strokeStyle = 'rgba(0, 229, 255, 0.12)';
       ctx.lineWidth = 1;
       ctx.setLineDash([8, 14]);
       ctx.stroke();
 
       ctx.beginPath();
       ctx.arc(0, 0, ringRadius * 1.35, 0, Math.PI * 2);
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.03)';
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.04)';
       ctx.lineWidth = 1;
       ctx.setLineDash([4, 20]);
       ctx.stroke();
@@ -101,7 +105,6 @@ export default function LoadingScreen({ onFinish }) {
         ctx.fillStyle = `rgba(255, 255, 255, ${p.alpha})`;
         ctx.fill();
 
-        // Connect nearby particles with subtle lines
         for (let j = i + 1; j < particles.length; j++) {
           const p2 = particles[j];
           const dx = p.x - p2.x;
@@ -112,7 +115,7 @@ export default function LoadingScreen({ onFinish }) {
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `rgba(255, 255, 255, ${0.12 * (1 - dist / 110)})`;
+            ctx.strokeStyle = `rgba(0, 229, 255, ${0.1 * (1 - dist / 110)})`;
             ctx.lineWidth = 0.6;
             ctx.stroke();
           }
@@ -132,7 +135,7 @@ export default function LoadingScreen({ onFinish }) {
     };
   }, [isExiting]);
 
-  // Word & Diagnostics Cycler
+  // Word Cycler
   useEffect(() => {
     const wordTimer = setInterval(() => {
       setWordIndex((prev) => (prev + 1) % WORDS_CYCLE.length);
@@ -140,14 +143,13 @@ export default function LoadingScreen({ onFinish }) {
     return () => clearInterval(wordTimer);
   }, []);
 
-  // Percentage Ticker
+  // Progress Ticker
   useEffect(() => {
     const timer = setInterval(() => {
       setProgress((prev) => {
-        const increment = Math.floor(Math.random() * 8) + 4;
+        const increment = Math.floor(Math.random() * 6) + 3;
         const next = prev + increment;
 
-        // Update diagnostics text proportionally
         const msgIdx = Math.min(
           DIAGNOSTIC_MESSAGES.length - 1,
           Math.floor((next / 100) * DIAGNOSTIC_MESSAGES.length)
@@ -156,12 +158,18 @@ export default function LoadingScreen({ onFinish }) {
 
         if (next >= 100) {
           clearInterval(timer);
-          setTimeout(() => {
-            setIsExiting(true);
+          try {
+            playFoilChime();
+          } catch (e) {}
+
+          if (!isStandalone) {
             setTimeout(() => {
-              if (onFinish) onFinish();
-            }, 850);
-          }, 350);
+              setIsExiting(true);
+              setTimeout(() => {
+                if (onFinish) onFinish();
+              }, 850);
+            }, 400);
+          }
           return 100;
         }
         return next;
@@ -169,7 +177,15 @@ export default function LoadingScreen({ onFinish }) {
     }, 45);
 
     return () => clearInterval(timer);
-  }, [onFinish]);
+  }, [onFinish, isStandalone, playFoilChime]);
+
+  const handleSkip = () => {
+    playTactileClick();
+    setIsExiting(true);
+    setTimeout(() => {
+      if (onFinish) onFinish();
+    }, 400);
+  };
 
   return (
     <div className={`preloader-overlay ${isExiting ? 'preloader-exit' : ''}`}>
@@ -181,11 +197,17 @@ export default function LoadingScreen({ onFinish }) {
       {/* Top Status Header */}
       <div className="preloader-top-bar">
         <div className="preloader-brand-label">
-          <span className="preloader-dot-pulse"></span>
+          <span className="preloader-dot-pulse" />
           <span>§ 𝐔 𝐊 𝐈 𝐈 • ATELIER ÉDITORIAL</span>
         </div>
-        <div className="preloader-sys-info">
-          <span>CYCLE 2026 // PARIS — ZURICH</span>
+        <div className="preloader-top-actions">
+          <span className="preloader-sys-info">CYCLE 2026 // TOKYO — ZURICH</span>
+          {!isStandalone && (
+            <button onClick={handleSkip} className="preloader-skip-btn">
+              <span>SKIP INTRO</span>
+              <i className="bi bi-arrow-right" />
+            </button>
+          )}
         </div>
       </div>
 
@@ -200,7 +222,7 @@ export default function LoadingScreen({ onFinish }) {
               cy="120"
               r="105"
               fill="none"
-              stroke="rgba(255,255,255,0.18)"
+              stroke="rgba(0, 229, 255, 0.25)"
               strokeWidth="1"
               strokeDasharray="4 8"
             />
@@ -210,7 +232,7 @@ export default function LoadingScreen({ onFinish }) {
               cy="120"
               r="85"
               fill="none"
-              stroke="rgba(255,255,255,0.3)"
+              stroke="rgba(255,255,255,0.4)"
               strokeWidth="1.5"
               strokeDasharray="14 12 4 12"
             />
@@ -220,7 +242,7 @@ export default function LoadingScreen({ onFinish }) {
               cy="120"
               r="65"
               fill="none"
-              stroke="rgba(255,255,255,0.15)"
+              stroke="rgba(0, 229, 255, 0.2)"
               strokeWidth="1"
               strokeDasharray="30 20"
             />
@@ -230,7 +252,7 @@ export default function LoadingScreen({ onFinish }) {
               cy="120"
               r="45"
               fill="none"
-              stroke="rgba(255,255,255,0.4)"
+              stroke="rgba(255,255,255,0.5)"
               strokeWidth="1"
               strokeDasharray="6 6"
             />
@@ -247,7 +269,7 @@ export default function LoadingScreen({ onFinish }) {
           </div>
         </div>
 
-        {/* Dynamic Typography Word Glitch/Cycle */}
+        {/* Dynamic Typography Word Glitch */}
         <div className="preloader-word-cycler">
           <span className="preloader-word-active">
             {WORDS_CYCLE[wordIndex]}
@@ -255,7 +277,7 @@ export default function LoadingScreen({ onFinish }) {
         </div>
 
         <h1 className="preloader-brand-main">§ 𝐔 𝐊 𝐈 𝐈</h1>
-        <p className="preloader-tagline-sub">Architecting stories beyond the page</p>
+        <p className="preloader-tagline-sub">Haute-Couture Book Architecture & Materiality</p>
       </div>
 
       {/* Bottom Loading Progress & Diagnostic Log */}
@@ -284,8 +306,8 @@ export default function LoadingScreen({ onFinish }) {
 
         <div className="preloader-micro-grid">
           <span>PRESS SPEC: ISO-12647-2</span>
-          <span>SUBSTRATE: 180GSM COTTON</span>
-          <span>KERNING: BESPOKE</span>
+          <span>SUBSTRATE: 180GSM POP'SET NOIR</span>
+          <span>KERNING: BESPOKE SWISS MODULE</span>
         </div>
       </div>
 
