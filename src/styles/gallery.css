@@ -1,0 +1,189 @@
+/* --------------------------------------------------
+   GALLERY & LIGHTBOX STYLES
+   -------------------------------------------------- */
+.filter-tabs-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  margin-bottom: 3.5rem;
+}
+
+.filter-btn {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 0.6rem 1.4rem;
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  background-color: var(--bg-card);
+  transition: all var(--transition-fast);
+}
+
+.filter-btn:hover, .filter-btn.active {
+  color: var(--text-primary);
+  border-color: var(--text-primary);
+  background-color: var(--accent-glow);
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+  gap: 1.75rem;
+}
+
+.gallery-card {
+  position: relative;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-card);
+  overflow: hidden;
+  cursor: pointer;
+  aspect-ratio: 4 / 5;
+  transition: border-color var(--transition-smooth), transform var(--transition-smooth);
+}
+
+.gallery-card.tall {
+  aspect-ratio: 3 / 5;
+}
+
+.gallery-card.wide {
+  aspect-ratio: 16 / 10;
+}
+
+.gallery-card:hover {
+  border-color: var(--border-glow);
+  transform: translateY(-6px);
+}
+
+.gallery-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
+}
+
+.gallery-card:hover .gallery-card-img {
+  transform: scale(1.07);
+}
+
+.gallery-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.3) 40%, transparent 100%);
+  opacity: 0;
+  transition: opacity var(--transition-smooth);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 2rem;
+}
+
+.gallery-card:hover .gallery-card-overlay {
+  opacity: 1;
+}
+
+.gallery-card-tag {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+
+.gallery-card-title {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+/* Lightbox Modal */
+.editorial-lightbox {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  z-index: 20000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-smooth);
+}
+
+.editorial-lightbox.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.lightbox-content-box {
+  position: relative;
+  max-width: 92vw;
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.lightbox-img {
+  max-width: 100%;
+  max-height: 78vh;
+  object-fit: contain;
+  border: 1px solid var(--border-highlight);
+  box-shadow: 0 35px 70px rgba(0, 0, 0, 0.9);
+}
+
+.lightbox-caption {
+  margin-top: 1.5rem;
+  text-align: center;
+  color: #FFFFFF;
+}
+
+.lightbox-caption-title {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+
+.lightbox-caption-sub {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  color: #AAAAAA;
+  text-transform: uppercase;
+  margin-top: 0.35rem;
+}
+
+.lightbox-btn {
+  position: absolute;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #FFFFFF;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  transition: all var(--transition-fast);
+}
+
+.lightbox-btn:hover {
+  border-color: #FFFFFF;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.lightbox-close { top: -55px; right: 0; }
+.lightbox-prev { top: 50%; left: -75px; transform: translateY(-50%); }
+.lightbox-next { top: 50%; right: -75px; transform: translateY(-50%); }
+
+@media (max-width: 768px) {
+  .lightbox-prev { left: 10px; }
+  .lightbox-next { right: 10px; }
+  .lightbox-close { top: 10px; right: 10px; }
+}

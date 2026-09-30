@@ -1,0 +1,387 @@
+/* --------------------------------------------------
+   EXPLODED 3D BOOK ANATOMY & TYPOGRAPHIC PLAYGROUND STYLES
+   -------------------------------------------------- */
+
+.exploded-anatomy-section {
+  background-color: var(--bg-primary);
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.exploded-stage-container {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.exploded-hud-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.exploded-status-tag {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  color: var(--text-primary);
+}
+
+.hud-pulse {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #00E5FF;
+  box-shadow: 0 0 10px #00E5FF;
+  animation: pulseDot 1.5s infinite ease-in-out;
+}
+
+.exploded-viewport-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 4.5rem;
+  align-items: center;
+}
+
+/* 3D Exploded Stage */
+.exploded-3d-stage {
+  position: relative;
+  min-height: 520px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 2000px;
+}
+
+.exploded-chassis {
+  position: relative;
+  width: 290px;
+  height: 420px;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.exploded-plane {
+  position: absolute;
+  inset: 0;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.75);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s;
+  cursor: pointer;
+  overflow: visible;
+  background-color: #111111;
+}
+
+.exploded-plane:hover,
+.exploded-plane.selected {
+  border-color: #00E5FF;
+  box-shadow: 0 30px 60px rgba(0, 229, 255, 0.25);
+}
+
+.plane-artwork {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.plane-index-tag {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(0, 0, 0, 0.8);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: #FFFFFF;
+  padding: 0.2rem 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.plane-connector-line {
+  position: absolute;
+  top: 50%;
+  right: -120px;
+  width: 110px;
+  height: 1px;
+  background-color: rgba(0, 229, 255, 0.6);
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+
+.connector-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: #00E5FF;
+  position: absolute;
+  left: 0;
+  top: -2px;
+}
+
+.connector-label {
+  position: absolute;
+  right: -10px;
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.14em;
+  color: #00E5FF;
+  white-space: nowrap;
+  background: rgba(0, 0, 0, 0.85);
+  padding: 0.15rem 0.4rem;
+  border: 1px solid rgba(0, 229, 255, 0.3);
+}
+
+.exploded-stage-shadow {
+  position: absolute;
+  bottom: 20px;
+  width: 320px;
+  height: 35px;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.85) 0%, transparent 70%);
+  filter: blur(14px);
+  pointer-events: none;
+}
+
+/* Spec Sidebar */
+.spec-layer-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.spec-card-top-tag {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  color: var(--text-muted);
+}
+
+.spec-status-code {
+  color: #00E5FF;
+}
+
+.active-layer-title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.active-layer-desc {
+  font-size: 0.98rem;
+  line-height: 1.75;
+  color: var(--text-secondary);
+}
+
+.layer-metrics-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.layer-m-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.m-k {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  color: var(--text-muted);
+}
+
+.m-v {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-top: 0.25rem;
+}
+
+.layer-selector-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.sel-title {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.16em;
+  color: var(--text-muted);
+  margin-bottom: 0.25rem;
+}
+
+.layer-btn-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.65rem 1rem;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-secondary);
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  text-align: left;
+  transition: all var(--transition-fast);
+  cursor: pointer;
+}
+
+.layer-btn-row:hover {
+  border-color: var(--border-highlight);
+  color: var(--text-primary);
+}
+
+.layer-btn-row.active {
+  border-color: #00E5FF;
+  background-color: var(--bg-primary);
+  color: #FFFFFF;
+}
+
+.l-num {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  opacity: 0.7;
+}
+
+/* --- TYPOGRAPHIC PLAYGROUND SECTION --- */
+.typo-playground-section {
+  background-color: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.typo-lab-grid {
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.typo-controls-col {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  padding: 3rem;
+}
+
+.caliper-slider-box {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.slider-header {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+}
+
+.slider-label {
+  color: var(--text-muted);
+}
+
+.slider-val {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.caliper-range-input {
+  width: 100%;
+  accent-color: var(--text-primary);
+  cursor: pointer;
+}
+
+/* Specimen Poster Frame */
+.specimen-poster-frame {
+  position: relative;
+  background-color: #0A0A0A;
+  border: 1px solid var(--border-color);
+  padding: 4rem 3.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 480px;
+  overflow: hidden;
+  box-shadow: 0 35px 70px rgba(0, 0, 0, 0.8);
+}
+
+.baseline-grid-lines {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 100% 24px;
+  pointer-events: none;
+}
+
+.specimen-header-meta {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.specimen-main-zone {
+  margin: auto 0;
+}
+
+.specimen-display-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  font-weight: 800;
+  color: #FFFFFF;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  transition: all 0.15s ease-out;
+}
+
+.specimen-body-lead {
+  color: var(--text-secondary);
+  max-width: 540px;
+  transition: all 0.15s ease-out;
+}
+
+.specimen-footer-calipers {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.16em;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 0.75rem;
+  margin-top: 2rem;
+}
+
+@media (max-width: 992px) {
+  .exploded-viewport-grid,
+  .typo-lab-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+}

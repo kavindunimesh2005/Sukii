@@ -1,0 +1,103 @@
+/* --------------------------------------------------
+   SERVICES & ACCORDION STYLES
+   -------------------------------------------------- */
+.editorial-service-list {
+  border-top: 1px solid var(--border-color);
+}
+
+.editorial-service-item {
+  border-bottom: 1px solid var(--border-color);
+  padding: 2.5rem 0;
+  transition: background-color var(--transition-smooth);
+}
+
+.editorial-service-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  cursor: pointer;
+  user-select: none;
+  gap: 1.5rem;
+}
+
+.service-meta-left {
+  display: flex;
+  align-items: baseline;
+  gap: 2.25rem;
+  flex-grow: 1;
+}
+
+.service-index {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  letter-spacing: 0.18em;
+  color: var(--text-muted);
+  min-width: 44px;
+}
+
+.service-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.45rem, 2.8vw, 2.3rem);
+  font-weight: 700;
+  color: var(--text-primary);
+  transition: transform var(--transition-smooth), color var(--transition-fast);
+}
+
+.editorial-service-item:hover .service-title {
+  transform: translateX(12px);
+}
+
+.service-tag {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.16em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.service-toggle-icon {
+  font-size: 1.35rem;
+  color: var(--text-muted);
+  transition: transform var(--transition-smooth), color var(--transition-fast);
+}
+
+.editorial-service-item.open .service-toggle-icon {
+  transform: rotate(45deg);
+  color: var(--text-primary);
+}
+
+.service-body-collapse {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+  opacity: 0;
+}
+
+.editorial-service-item.open .service-body-collapse {
+  max-height: 480px;
+  opacity: 1;
+  margin-top: 1.75rem;
+}
+
+.service-deliverables-list {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0 0 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 0.85rem;
+}
+
+.service-deliverables-list li {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.service-deliverables-list li::before {
+  content: '—';
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}

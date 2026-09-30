@@ -1,0 +1,302 @@
+/* --------------------------------------------------
+   CINEMATIC CRAFT FILM SHOWREEL & VIDEO HUD STYLES
+   -------------------------------------------------- */
+
+.cinematic-showreel-section {
+  background-color: #050505;
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+  position: relative;
+  overflow: hidden;
+}
+
+.cinematic-film-container {
+  background-color: #000000;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 40px 90px rgba(0, 0, 0, 0.95);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Top Cinema HUD */
+.film-top-hud {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 2rem;
+  background-color: #0A0A0A;
+  border-bottom: 1px solid var(--border-color);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  color: var(--text-muted);
+}
+
+.hud-rec-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: #FFFFFF;
+}
+
+.rec-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #FF1744;
+  box-shadow: 0 0 10px #FF1744;
+  animation: recBlink 1s infinite alternate;
+}
+
+@keyframes recBlink {
+  0% { opacity: 0.3; }
+  100% { opacity: 1; }
+}
+
+.hud-timecode {
+  color: #00E5FF;
+}
+
+/* Video Player Frame (2.39:1 Cinemascope) */
+.film-video-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2.39 / 1;
+  background-color: #000000;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .film-video-wrapper {
+    aspect-ratio: 16 / 10;
+  }
+}
+
+.film-video-element {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: contrast(1.1) brightness(0.9);
+}
+
+/* Film Texture & Vignette Overlay */
+.film-grain-overlay {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 0);
+  background-size: 16px 16px;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.film-vignette-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, transparent 40%, rgba(0,0,0,0.85) 100%);
+  pointer-events: none;
+}
+
+/* Center Play / Pause Button */
+.film-play-trigger-btn {
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background-color: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(12px);
+  color: #FFFFFF;
+  font-size: 1.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-smooth);
+  opacity: 0;
+  transform: scale(0.9);
+  z-index: 10;
+}
+
+.film-video-wrapper:hover .film-play-trigger-btn,
+.film-play-trigger-btn.show-always {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.film-play-trigger-btn:hover {
+  background-color: #FFFFFF;
+  color: #000000;
+  border-color: #FFFFFF;
+  transform: scale(1.1);
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.6);
+}
+
+/* Bottom HUD */
+.film-bottom-hud {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 2.5rem;
+  background-color: #0A0A0A;
+  border-top: 1px solid var(--border-color);
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.film-chapter-title {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #FFFFFF;
+  margin-bottom: 0.35rem;
+}
+
+.film-chapter-desc {
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  max-width: 650px;
+}
+
+.film-controls-col {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.film-action-btns {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.film-icon-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-card);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.film-icon-btn:hover {
+  border-color: #FFFFFF;
+  background-color: #FFFFFF;
+  color: #000000;
+}
+
+/* Audio Waveform Equalizer Bars */
+.audio-waveform-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 24px;
+}
+
+.audio-waveform-bars .bar {
+  width: 3px;
+  background-color: #717171;
+  border-radius: 1px;
+  height: 4px;
+  transition: height 0.2s ease;
+}
+
+.audio-waveform-bars.active .bar {
+  background-color: #00E5FF;
+  animation: equalizerWave 1s infinite ease-in-out alternate;
+}
+
+.audio-waveform-bars.active .b1 { animation-delay: 0.1s; height: 12px; }
+.audio-waveform-bars.active .b2 { animation-delay: 0.3s; height: 22px; }
+.audio-waveform-bars.active .b3 { animation-delay: 0.5s; height: 16px; }
+.audio-waveform-bars.active .b4 { animation-delay: 0.2s; height: 24px; }
+.audio-waveform-bars.active .b5 { animation-delay: 0.4s; height: 10px; }
+
+@keyframes equalizerWave {
+  0% { height: 4px; }
+  50% { height: 24px; }
+  100% { height: 8px; }
+}
+
+/* Timeline Chapter Markers */
+.film-timeline-chapters {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  background-color: #070707;
+  border-top: 1px solid var(--border-color);
+}
+
+.timeline-chapter-btn {
+  padding: 1.25rem 1.75rem;
+  border: none;
+  border-right: 1px solid var(--border-color);
+  background: transparent;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+  position: relative;
+}
+
+.timeline-chapter-btn:last-child {
+  border-right: none;
+}
+
+.timeline-chapter-btn:hover {
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+.timeline-chapter-btn.active {
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+.timeline-prog-bar {
+  width: 100%;
+  height: 2px;
+  background-color: #1F1F1F;
+}
+
+.timeline-chapter-btn.active .timeline-prog-bar {
+  background: linear-gradient(90deg, #00E5FF, #FFFFFF);
+  box-shadow: 0 0 10px rgba(0, 229, 255, 0.8);
+}
+
+.timeline-btn-text {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text-muted);
+}
+
+.timeline-chapter-btn.active .timeline-btn-text {
+  color: #FFFFFF;
+}
+
+.ch-title {
+  font-weight: 600;
+  letter-spacing: 0.12em;
+}
+
+@media (max-width: 992px) {
+  .film-timeline-chapters {
+    grid-template-columns: 1fr;
+  }
+  .timeline-chapter-btn {
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+  }
+}
